@@ -1,14 +1,15 @@
 #include <iostream>
 #include <math.h>
-void binaryzador(int num,char* bin)
+#include <fstream>
+void binaryzador(int num,char * bin,int tam)
 /*convierte una lista char de tamanho 8 a el numero el numero binario correspondiente al numero incertado*/
 //se le ingresa un int positivo, gracias
 {
-    for (int x=0;x!=8;x++)
+    for (int x=0;x!=tam;x++)
     {
-        if(pow(2,7-x)<=num)
+        if(pow(2,tam-1-x)<=num)
         {
-            num= num % (int (pow(2,7-x)));
+            num= num % (int (pow(2,tam-1-x)));
             bin[x]='1';
 
         }
@@ -19,14 +20,14 @@ void binaryzador(int num,char* bin)
     }
 }
 //-------------------------------------------------------------------------------------------------------------------------
-int decimalizador(char* bin)
+int decimalizador(char* bin,int tam)
 /* una lista char correspondiente a un numero binario es traducida a su correspondiente numero decimnal*/
 //el numero decimal maximo a representar debe estar dentro del rango de los positivos que puede reprensentar un int
 {
     int val=0;
-    for(int x=0;x<8;x++)
+    for(int x=0;x<tam;x++)
     {
-        val+= (int(*(bin+x)-'0'))*(int(pow(2,7-x)));
+        val+= (int(*(bin+x)-'0'))*(int(pow(2,tam-1-x)));
     }
     return val;
 }
@@ -230,4 +231,34 @@ void desencriptacion1(int n,char*arreg,int tam_arreg)
         }
     }
 
+}
+//-------------------------------------------------------------------------------------------------------------------------
+char comparar_2cadenas_de_caracteres(char* L,char* l,int tam)
+{
+    for(int x=0;x<tam;x++)
+    {
+        if(L[x]!=l[x])
+        {
+            return '0';
+        }
+    }
+    return '1';
+}
+//-------------------------------------------------------------------------------------------------------------------------
+int lenarreg(char* L)
+{
+    int c=0;
+    for(int x=0;L[x]!='\0'&&L[x]!=',';x++)
+    {
+        c++;
+    }
+    return c;
+}
+//-------------------------------------------------------------------------------------------------------------------------
+void encriptcontra_de_contrasenhas(char* cont,char* encrip)
+{
+    for(int x=0;x<4;x++)
+    {
+        binaryzador(int(cont[x]),(encrip+(x*8)),8);
+    }
 }
