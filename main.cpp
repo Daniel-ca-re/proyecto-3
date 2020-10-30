@@ -40,8 +40,8 @@ int main()
             cout<<"saldo del usuario(en pesos)"<<endl;
             cin>> saldo;
             binaryzador(saldo,arrsal,32);
-            encriptacion2(key,arrsal,lenarreg(arrsal));
             encriptcontra_de_contrasenhas(contrasenha,arrcont);
+            encriptacion1(key,arrsal,32);
             encriptacion2(key,arrcont,32);
 
             ofstream archivo;
@@ -101,10 +101,86 @@ int main()
            int posicion=esta_en(data,cedula,lenarreg(data));
            if (posicion!=2)
            {
+               int saldo;
+               char vcont[33];
+               char pcont[33];
+               rellenado(vcont,'\0',33);
+               rellenado(pcont,'\0',33);
+               datos_necesarios(data+posicion,saldo,vcont);
                cout<<"ingrese su contrasenha: "<<endl;
                char contrasenha[5];
                rellenado(contrasenha,'\0',5);
                scanf("%s", contrasenha);
+               encriptcontra_de_contrasenhas(contrasenha,pcont);
+               if (comparar_2cadenas_de_caracteres(pcont,vcont,32)=='1')
+               {
+                   elec=3;
+                   while (elec!=0 && elec!=1 && elec!=2)
+                   {
+                       cout <<"elija:\n 1. retirar dinero \n2. consulta de saldo  \n 0. salir"<<endl;
+                       cin >> elec;
+
+                   }
+                   if(elec==1)
+                   {
+                       int retiro;
+                       cout <<"valor que desea retirar: "<<endl;
+                       cin >> retiro;
+                       saldo-=retiro;
+                   }
+                   else if(elec==2)
+                   {
+                       int retiro=1000;
+                       saldo-=retiro;
+                       cout <<saldo<<endl;
+                   }
+                   binaryzador(saldo,vcont,32);
+                   encriptacion1(key,vcont,32);
+                   int c=0;
+                   for(int x=0;c<2;x++)
+                   {
+                       if (data[posicion+x]==',')
+                       {
+                           c++;
+                       }
+                       if (c==2)
+                       {
+                           sobre_escritura(data+posicion+x+1,vcont,32);
+                           break;
+                       }
+                   }
+                      ofstream outfile;
+
+                      outfile.open("../proyecto_3/BD/sudo.txt");
+
+                      if (!outfile.is_open())
+                      {
+                        cout << "Error abriendo el archivo" << endl;
+                        exit(1);
+                      }
+                      for(int x=0;x<lenarreg(data);x++)
+                      {
+                          if(data[x]=='.')
+                          {
+                              outfile << '\n';
+                          }
+                          else
+                          {
+                              outfile << data[x];
+                          }
+                      }
+
+
+
+
+                      // Se cierra el archivo
+                      outfile.close();
+
+               }
+               else
+               {
+                   cout <<"contrasenha incorrecta"<<endl;
+               }
 
            }
            else

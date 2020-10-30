@@ -323,3 +323,33 @@ int esta_en(char* arreg,int cedula,int tam)
     }
     return 2;
 }
+//-------------------------------------------------------------------------------------------------------------------------
+void datos_necesarios(char* datos,int& saldo,char* cont)
+{
+    char arrsaldo[33];
+    rellenado(arrsaldo,'\0',32);
+    int c=0;
+    int y=0;
+    for(int x=0;datos[x]!='.' && datos[x]!='\0';x++)
+    {
+        if(datos[x]==',')
+        {
+            y=0;
+            c++;
+        }
+        if(c==1 && datos[x]!=',')
+        {
+            cont[y]=datos[x];
+            y++;
+        }
+        else if (c==2 && datos[x]!=',')
+        {
+            arrsaldo[y]=datos[x];
+            y++;
+        }
+    }
+    desencriptacion1(4,arrsaldo,32);
+    desencriptacion2(4,cont,32);
+    saldo=decimalizador(arrsaldo,32);
+
+}

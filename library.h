@@ -14,5 +14,6 @@ int chart_to_int(char*,int);
 void rellenado(char*,char,int);
 void sobre_escritura(char*,char*,int);
 int esta_en(char*,int,int);
+void datos_necesarios(char* datos,int& saldo,char* cont);
 
 #endif // LIBRARY_H
