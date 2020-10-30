@@ -28,8 +28,9 @@ int main()
             char arrsal[33];
             char contrasenha[5];
             char arrcont[33];
-            arrsal[32]='\0';
-            arrcont[32]='\0';
+            rellenado(arrsal,'\0',33);
+            rellenado(arrcont,'\0',33);
+
             int saldo;
             cout<<"se le pedira la informacion requeriada para ingresar un ususario"<<endl;
             cout<<"Cedula del usuario "<<endl;
@@ -49,11 +50,69 @@ int main()
             archivo << cedula <<','<<arrcont<<','<<arrsal<<endl;
             archivo.close();
         }
+
         else
         {
             cout<<"contrasenha incorrecta"<<endl;
         }
+
     }
 
-}
+    else if (elec==2)
+    {
+           ifstream infile;
+           char data[1000];
+           rellenado(data,'\0',1000);
+           infile.open("../proyecto_3/BD/sudo.txt");
+           if (!infile.is_open())
+           {
+             cout << "Error abriendo el archivo" << endl;
+             exit(1);
+           }
+           char copy1[100];
+           rellenado(copy1,'\0',100);
+           char copy2[100];
+           rellenado(copy2,'\0',100);
+           infile >> copy1;
+           sobre_escritura(data,copy1,100);
+           while(comparar_2cadenas_de_caracteres(copy1,copy2,100)=='0')
+           {
 
+               sobre_escritura(copy2,copy1,100);
+               rellenado(copy1,'\0',100);
+               infile >> copy1;
+               if (copy1[0]=='\0')
+               {
+                   break;
+               }
+
+               data[lenarreg(data)]='.';
+               sobre_escritura(data+lenarreg(data),copy1,100);
+
+
+
+
+
+           }
+           infile.close();
+           int cedula;
+           cout<<"ingrese su cedula: "<<endl;
+           cin >>cedula;
+           int posicion=esta_en(data,cedula,lenarreg(data));
+           if (posicion!=2)
+           {
+               cout<<"ingrese su contrasenha: "<<endl;
+               char contrasenha[5];
+               rellenado(contrasenha,'\0',5);
+               scanf("%s", contrasenha);
+
+           }
+           else
+           {
+               cout<<"usuario inexistente"<<endl;
+           }
+
+
+    }
+    return 0;
+}

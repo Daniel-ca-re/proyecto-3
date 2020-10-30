@@ -248,7 +248,7 @@ char comparar_2cadenas_de_caracteres(char* L,char* l,int tam)
 int lenarreg(char* L)
 {
     int c=0;
-    for(int x=0;L[x]!='\0'&&L[x]!=',';x++)
+    for(int x=0;L[x]!='\0';x++)
     {
         c++;
     }
@@ -261,4 +261,65 @@ void encriptcontra_de_contrasenhas(char* cont,char* encrip)
     {
         binaryzador(int(cont[x]),(encrip+(x*8)),8);
     }
+}
+//-------------------------------------------------------------------------------------------------------------------------
+int chart_to_int(char* charnum,int tam)
+{
+    int sum=0;
+    for(int x=tam-1;x>=0;x--)
+    {
+        sum+=int((charnum[x]-'0'))*(pow(10,tam-1-x));
+    }
+    return sum;
+}
+//-------------------------------------------------------------------------------------------------------------------------
+void rellenado(char* arreg,char val,int tam)
+{
+    for(int x=0;x<tam;x++)
+    {
+        arreg[x]=val;
+    }
+}
+//------------------------------------------------------------------------------------------------------------------------
+void sobre_escritura(char* arrai1,char* arrai2,int tam2)
+{
+    for(int x=0;x<tam2;x++)
+    {
+        arrai1[x]=arrai2[x];
+    }
+}
+//------------------------------------------------------------------------------------------------------------------------
+int esta_en(char* arreg,int cedula,int tam)
+{
+    char ced[20];
+    rellenado(ced,'\0',20);
+    char v='0';
+    int posicion=0;
+    int c=0;
+    for (int x=0;x<tam;x++)
+    {
+        if(v=='0'&& arreg[x]!=',')
+        {
+            ced[c]=arreg[x];
+            c++;
+        }
+        if(arreg[x]==',')
+        {
+            v='1';
+            if(chart_to_int(ced,lenarreg(ced))==cedula)
+            {
+                return posicion;
+            }
+        }
+        else if (arreg[x]=='.')
+        {
+            v='0';
+            rellenado(ced,'\0',20);
+            posicion=x+1;
+            c=0;
+        }
+
+
+    }
+    return 2;
 }
