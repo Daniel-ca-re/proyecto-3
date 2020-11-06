@@ -16,12 +16,14 @@ int main()
         cin >> elec;
 
     }
+    //administrador
     if (elec==1)
     {
         char admcont[]="abcd";
         cout <<"ingrese la contrasenha"<<endl;
         char cont[5];
         scanf("%s", cont);
+        //verificacion
         if (comparar_2cadenas_de_caracteres(cont,admcont,4)=='1')
         {
             int cedula;
@@ -58,6 +60,7 @@ int main()
 
     }
 
+    //ususario
     else if (elec==2)
     {
            ifstream infile;
@@ -75,6 +78,7 @@ int main()
            rellenado(copy2,'\0',100);
            infile >> copy1;
            sobre_escritura(data,copy1,100);
+           //se crea un arreglo char que contiene toda la informacion sobre usuarios
            while(comparar_2cadenas_de_caracteres(copy1,copy2,100)=='0')
            {
 
@@ -98,6 +102,7 @@ int main()
            int cedula;
            cout<<"ingrese su cedula: "<<endl;
            cin >>cedula;
+           //se verifica que la cedula se a parte de los usuarios
            int posicion=esta_en(data,cedula,lenarreg(data));
            if (posicion!=2)
            {
@@ -112,9 +117,11 @@ int main()
                rellenado(contrasenha,'\0',5);
                scanf("%s", contrasenha);
                encriptcontra_de_contrasenhas(contrasenha,pcont);
+               //se compara la contrasenha del usuario con la dada
                if (comparar_2cadenas_de_caracteres(pcont,vcont,32)=='1')
                {
                    elec=3;
+                   //se elije la accion que desea hacer el usuario y se ejecuta la accion
                    while (elec!=0 && elec!=1 && elec!=2)
                    {
                        cout <<"elija:\n 1. retirar dinero \n2. consulta de saldo  \n 0. salir"<<endl;
@@ -134,9 +141,11 @@ int main()
                        saldo-=retiro;
                        cout <<saldo<<endl;
                    }
+                   //se traduce el saldo a binario y se encripta
                    binaryzador(saldo,vcont,32);
                    encriptacion1(key,vcont,32);
                    int c=0;
+                   //se cambia el nuevo valor por el anterir dentro del arreglo data
                    for(int x=0;c<2;x++)
                    {
                        if (data[posicion+x]==',')
@@ -149,6 +158,7 @@ int main()
                            break;
                        }
                    }
+                   //se copia la nueva informacion en el archivo.txt
                       ofstream outfile;
 
                       outfile.open("../proyecto_3/BD/sudo.txt");

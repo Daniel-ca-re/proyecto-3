@@ -2,7 +2,7 @@
 #include <math.h>
 #include <fstream>
 void binaryzador(int num,char * bin,int tam)
-/*convierte una lista char de tamanho 8 a el numero el numero binario correspondiente al numero incertado*/
+/*convierte una lista char de tamanho 32 a el numero el numero binario correspondiente al numero incertado*/
 //se le ingresa un int positivo, gracias
 {
     for (int x=0;x!=tam;x++)
@@ -136,6 +136,7 @@ void encriptacion2(int n,char*arreg,int tam_arreg)
 }
 //-------------------------------------------------------------------------------------------------------------------------
 void desencriptacion2(int n,char*arreg,int tam_arreg)
+//revierte el proceso de encriptacion 2
 {
     int lim_inf;
     int lim_sup;
